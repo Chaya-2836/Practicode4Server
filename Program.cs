@@ -39,6 +39,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
     c.RoutePrefix = string.Empty; // אם אתה רוצה ש-Swagger ייפתח על דף הבית
 });
+app.MapGet("/", () => "My API is running"); 
 
 // קריאה לשליפת כל הפריטים
 app.MapGet("/get", async (MySqlConnection db) =>
@@ -50,7 +51,7 @@ app.MapGet("/get", async (MySqlConnection db) =>
 // קריאה להוספת פריט חדש
 app.MapPost("/items", async (MySqlConnection db, Item newItem) =>
 {
-    
+
     var query = "INSERT INTO practicod.items (name, IsComplete) VALUES (@Name, @IsComplete)";
     await db.ExecuteAsync(query, newItem);
 
