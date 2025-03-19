@@ -50,6 +50,7 @@ app.MapGet("/get", async (MySqlConnection db) =>
 // קריאה להוספת פריט חדש
 app.MapPost("/items", async (MySqlConnection db, Item newItem) =>
 {
+    
     var query = "INSERT INTO practicod.items (name, IsComplete) VALUES (@Name, @IsComplete)";
     await db.ExecuteAsync(query, newItem);
 
