@@ -44,7 +44,7 @@ app.MapGet("/", () => "My API is running");
 // קריאה לשליפת כל הפריטים
 app.MapGet("/get", async (MySqlConnection db) =>
 {
-    var items = await db.QueryAsync<Item>("SELECT * FROM practicod.items");
+    var items = await db.QueryAsync<Item>("SELECT * FROM bfagdrc19oe8cffi1akx.items");
     return Results.Ok(items);
 });
 
@@ -52,7 +52,7 @@ app.MapGet("/get", async (MySqlConnection db) =>
 app.MapPost("/items", async (MySqlConnection db, Item newItem) =>
 {
 
-    var query = "INSERT INTO practicod.items (name, IsComplete) VALUES (@Name, @IsComplete)";
+    var query = "INSERT INTO bfagdrc19oe8cffi1akx.items (name, IsComplete) VALUES (@Name, @IsComplete)";
     await db.ExecuteAsync(query, newItem);
 
     // כדי לקבל את ה-Id החדש שהוקצה באופן אוטומטי בבסיס הנתונים
@@ -64,14 +64,14 @@ app.MapPost("/items", async (MySqlConnection db, Item newItem) =>
 // קריאה לעדכון פריט קיים
 app.MapPut("/items/{id}", async (int id, bool complete, MySqlConnection db) =>
 {
-    Item? existingItem = await db.QueryFirstOrDefaultAsync<Item>("SELECT * FROM practicod.items WHERE Id = @Id", new { Id = id });
+    Item? existingItem = await db.QueryFirstOrDefaultAsync<Item>("SELECT * FROM bfagdrc19oe8cffi1akx.items WHERE Id = @Id", new { Id = id });
 
     if (existingItem == null)
     {
         return Results.NotFound();
     }
 
-    await db.ExecuteAsync("UPDATE practicod.items SET IsComplete = @IsComplete WHERE Id = @Id", new { Id = id, IsComplete = complete });
+    await db.ExecuteAsync("UPDATE bfagdrc19oe8cffi1akx.items SET IsComplete = @IsComplete WHERE Id = @Id", new { Id = id, IsComplete = complete });
 
     return Results.Ok(existingItem);
 });
@@ -79,14 +79,14 @@ app.MapPut("/items/{id}", async (int id, bool complete, MySqlConnection db) =>
 // קריאה למחיקת פריט
 app.MapDelete("/items/{id}", async (MySqlConnection db, int id) =>
 {
-    var existingItem = await db.QueryFirstOrDefaultAsync<Item>("SELECT * FROM practicod.items WHERE id = @Id", new { Id = id });
+    var existingItem = await db.QueryFirstOrDefaultAsync<Item>("SELECT * FROM bfagdrc19oe8cffi1akx.items WHERE id = @Id", new { Id = id });
 
     if (existingItem == null)
     {
         return Results.NotFound();
     }
 
-    await db.ExecuteAsync("DELETE FROM practicod.items WHERE id = @Id", new { Id = id });
+    await db.ExecuteAsync("DELETE FROM bfagdrc19oe8cffi1akx.items WHERE id = @Id", new { Id = id });
 
     return Results.NoContent();
 });
